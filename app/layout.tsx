@@ -8,6 +8,9 @@ import {
   UserButton,
 } from "@clerk/nextjs";
 import "./globals.css";
+import "../styles/Quill.css";
+import { ThemeProvider } from "@/context/ThemeContext";
+import Nav from "@/components/main/Nav";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -23,17 +26,19 @@ export default function RootLayout({
 }>) {
   return (
     <ClerkProvider>
-      <html lang="en">
-        <body>
-          <SignedOut>
-            <SignInButton />
-          </SignedOut>
-          <SignedIn>
-            <UserButton />
-          </SignedIn>
-          {children}
-        </body>
-      </html>
+      <ThemeProvider>
+        <html lang="en">
+          <body className="min-h-screen bg-slate-200 dark:bg-gray-900 text-black dark:text-white">
+            <SignedOut>
+              <SignInButton />
+            </SignedOut>
+            <SignedIn>
+              <Nav />
+            </SignedIn>
+            <div className="flex flex-col items-center mt-3">{children}</div>
+          </body>
+        </html>
+      </ThemeProvider>
     </ClerkProvider>
   );
 }
