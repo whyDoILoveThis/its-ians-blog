@@ -7,7 +7,7 @@ interface params {
     userId: string | null | undefined;
 }
 
-export const fbGetAllBlogs = async ({userId} : params): Promise<Blog[]> => {
+export const fbGetUsersBlogs = async ({userId} : params): Promise<Blog[]> => {
   const blogs: Blog[] = [];
 
   try {
@@ -21,7 +21,11 @@ export const fbGetAllBlogs = async ({userId} : params): Promise<Blog[]> => {
         title: data.title,
         text: data.text,
         imageUrl: data.imageUrl || undefined,
+        creatorUid: data.creatorUid,
+        createdAt: data.createdAt,
+        docId: data.docId
       };
+      
       blogs.push(blog);
     });
 

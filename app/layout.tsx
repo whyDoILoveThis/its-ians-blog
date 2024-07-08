@@ -11,6 +11,7 @@ import "./globals.css";
 import "../styles/Quill.css";
 import { ThemeProvider } from "@/context/ThemeContext";
 import Nav from "@/components/main/Nav";
+import "../middleware";
 
 const inter = Inter({ subsets: ["latin"] });
 

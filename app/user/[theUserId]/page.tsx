@@ -16,8 +16,7 @@ const Page = ({ params: { theUserId } }: { params: { theUserId: string } }) => {
 
   return (
     <div>
-      {theUserId} <p>{theUser?.fullName}</p>
-      <AllBlogs userId={theUserId} />
+      <AllBlogs firstName={theUser?.firstName} userId={theUserId} />
     </div>
   );
 };

@@ -1,18 +1,19 @@
 import React, { useEffect, useState } from "react";
-import { fbGetAllBlogs } from "@/firebase/fbGetAllBlogs";
+import { fbGetUsersBlogs } from "@/firebase/fbGetUsersBlogs";
 import BlogCard from "../Cards/BlogCard";
 
 interface Props {
+  firstName: MaybeString;
   userId: string;
 }
 
-const AllBlogs = ({ userId }: Props) => {
+const AllBlogs = ({ firstName, userId }: Props) => {
   const [blogs, setBlogs] = useState<Blog[]>([]);
 
   useEffect(() => {
     const fetchBlogData = async () => {
       try {
-        const fetchedBlogs = await fbGetAllBlogs({ userId });
+        const fetchedBlogs = await fbGetUsersBlogs({ userId });
         setBlogs(fetchedBlogs);
       } catch (error) {
         console.error("Error fetching blogs:", error);
@@ -27,7 +28,7 @@ const AllBlogs = ({ userId }: Props) => {
 
   return (
     <div>
-      <h1>Blogs</h1>
+      <h1 className="text-center">{firstName}&#39;s Blogs</h1>
       <ul className="flex flex-col gap-4 p-4">
         {blogs.map((blog, index) => (
           <BlogCard key={index} blog={blog} />

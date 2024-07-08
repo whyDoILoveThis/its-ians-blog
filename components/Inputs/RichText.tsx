@@ -6,7 +6,7 @@ const ReactQuill = dynamic(() => import("react-quill"), { ssr: false });
 
 interface RichTextProps {
   setText: (text: string) => void;
-  text: string;
+  text: string | undefined;
 }
 
 const RichText: React.FC<RichTextProps> = ({ setText, text }) => {

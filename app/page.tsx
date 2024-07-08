@@ -12,6 +12,7 @@ export default function Home() {
   const { userId } = useAuth();
   const [allUsers, setAllUsers] = useState<User[]>([]);
   const [theUser, setTheUser] = useState<User | null>();
+  const [saved, setSaved] = useState(false);
   console.log(user);
 
   const handleSaveMyInfo = async () => {
@@ -22,6 +23,7 @@ export default function Home() {
       email: user?.emailAddresses[0].emailAddress,
       photoUrl: user?.imageUrl,
     });
+    setSaved(!saved);
   };
 
   useEffect(() => {
@@ -40,13 +42,19 @@ export default function Home() {
       };
       fetchTheUser();
     }
-  }, [userId]);
+  }, [userId, saved]);
 
   return (
     <>
       <p className="text-3xl font-semibold">👋🏽Hey, {user?.firstName}</p>
-      <p>Save your info so that people can find your page</p>
-      <button onClick={handleSaveMyInfo}>Save Me!</button>
+      {theUser?.userId !== userId && (
+        <>
+          <p>Save your info so that people can find your page</p>
+          <button className="btn btn-green" onClick={handleSaveMyInfo}>
+            Save Me!
+          </button>
+        </>
+      )}
       <article>
         <h2 className="text-2xl">All Users</h2>
         <div>

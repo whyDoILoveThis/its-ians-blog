@@ -16,9 +16,7 @@ interface ThemeContextProps {
 const ThemeContext = createContext<ThemeContextProps | undefined>(undefined);
 
 export const ThemeProvider = ({ children }: { children: ReactNode }) => {
-  const [theme, setTheme] = useState<string>(
-    localStorage.getItem("theme") || "dark"
-  );
+  const [theme, setTheme] = useState<string>("dark");
 
   useEffect(() => {
     const root = window.document.documentElement;
