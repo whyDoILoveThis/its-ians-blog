@@ -81,6 +81,8 @@ cursor-pointer
     @apply 
     text-red-800
     dark:text-red-200
+    hover:dark:text-red-300
+    hover:text-red-700
     bg-red-500
     bg-opacity-30
     border-red-700
@@ -109,6 +111,12 @@ cursor-pointer
     dark:border-opacity-80
     hover:dark:border-opacity-60
     dark:border-green-400
+}
+
+.btn-trash {
+    @apply
+    p-1
+    btn-red
 }
 
 .btn-close {

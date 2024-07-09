@@ -20,6 +20,8 @@ export async function fbDeleteCommentFromBlog({
   docId,
 }: Params) {
   try {
+    console.log(userId, '---------------', docId);
+    
     const docRef = doc(db, `blogs-${userId}`, docId);
     await updateDoc(docRef, {
       comments: arrayRemove(comment),
