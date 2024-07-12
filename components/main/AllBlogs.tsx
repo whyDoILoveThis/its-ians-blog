@@ -29,14 +29,21 @@ const AllBlogs = ({ firstName, userId }: Props) => {
   if (!blogs || !firstName) {
     return <Loader />;
   }
+
   return (
     <div>
       <h1 className="text-center">{firstName}&#39;s Blogs</h1>
-      <ul className="flex flex-col gap-4 p-4">
-        {blogs.map((blog, index) => (
-          <BlogCard key={index} blog={blog} />
-        ))}
-      </ul>
+      {blogs.length <= 0 ? (
+        <p className="mt-4 text-lg">
+          This user hasn&#39;t created any blogs yet
+        </p>
+      ) : (
+        <ul className="flex flex-col gap-4 p-4">
+          {blogs.map((blog, index) => (
+            <BlogCard key={index} blog={blog} />
+          ))}
+        </ul>
+      )}
     </div>
   );
 };

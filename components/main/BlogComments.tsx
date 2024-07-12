@@ -88,7 +88,7 @@ const BlogComments = ({ userId, docId }: Props) => {
                       </div>
                     )}
                     <p>{comment.text}</p>
-                    {user?.id === comment.commenterUid && (
+                    {user?.id === userId && (
                       <button
                         className="btn btn-trash w-fit"
                         onClick={() => {
@@ -103,6 +103,22 @@ const BlogComments = ({ userId, docId }: Props) => {
                         <CiTrash />
                       </button>
                     )}
+                    {user?.id === comment.commenterUid &&
+                      user?.id !== userId && (
+                        <button
+                          className="btn btn-trash w-fit"
+                          onClick={() => {
+                            fbDeleteCommentFromBlog({
+                              comment,
+                              userId,
+                              docId,
+                            });
+                            setAdding(!adding);
+                          }}
+                        >
+                          <CiTrash />
+                        </button>
+                      )}
                   </div>
                 );
               })
