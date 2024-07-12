@@ -5,10 +5,10 @@ import {
   SignInButton,
   SignedIn,
   SignedOut,
-  UserButton,
 } from "@clerk/nextjs";
 import "./globals.css";
 import "../styles/Quill.css";
+import "../styles/Clerk.css";
 import { ThemeProvider } from "@/context/ThemeContext";
 import Nav from "@/components/main/Nav";
 import "../middleware";
@@ -31,12 +31,12 @@ export default function RootLayout({
         <html lang="en">
           <body className="min-h-screen bg-slate-200 dark:bg-gray-900 text-black dark:text-white">
             <SignedOut>
-              <SignInButton />
+              <SignInButton mode="modal" />
             </SignedOut>
             <SignedIn>
               <Nav />
+              <div className="flex flex-col items-center mt-3">{children}</div>
             </SignedIn>
-            <div className="flex flex-col items-center mt-3">{children}</div>
           </body>
         </html>
       </ThemeProvider>

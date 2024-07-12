@@ -2,8 +2,7 @@
 "use client";
 import React from "react";
 import { useTheme } from "../../context/ThemeContext";
-import { FaSun } from "react-icons/fa6";
-import { PiMoonStarsDuotone } from "react-icons/pi";
+import { PiMoonStarsDuotone, PiSunDuotone } from "react-icons/pi";
 const ThemeToggle = () => {
   const { theme, setTheme } = useTheme();
 
@@ -13,9 +12,9 @@ const ThemeToggle = () => {
       className="p-2 rounded-full focus:outline-none"
     >
       {theme === "light" ? (
-        <PiMoonStarsDuotone className="w-6 h-6 text-slate-400" />
+        <PiMoonStarsDuotone className="w-6 h-6 text-slate-700" />
       ) : (
-        <FaSun className="w-6 h-6 text-yellow-500" />
+        <PiSunDuotone className="w-6 h-6 text-slate-200" />
       )}
     </button>
   );

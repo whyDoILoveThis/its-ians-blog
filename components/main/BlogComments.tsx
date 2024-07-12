@@ -7,7 +7,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { fbDeleteCommentFromBlog } from "@/firebase/fbDeleteCommentFromBlog";
 import { CiTrash } from "react-icons/ci";
-
+import Loader from "../Loader";
 interface Props {
   userId: string;
   docId: string;
@@ -35,7 +35,7 @@ const BlogComments = ({ userId, docId }: Props) => {
     e.preventDefault();
     const comment = {
       text: value,
-      commenterUid: userId,
+      commenterUid: user?.id,
       commenterFullName: user?.fullName,
       userPhotoUrl: user?.imageUrl,
       createdAt: new Date().toDateString(),
@@ -47,12 +47,17 @@ const BlogComments = ({ userId, docId }: Props) => {
     });
     setValue("");
   };
+
+  if (!blog) {
+    return <Loader />;
+  }
   return (
     <article className="">
       <article className="m-4 p-4 pb-0">
         {blog && (
           <div className="flex flex-col bg-black bg-opacity-15 gap-4 border-thin p-4 rounded-xl">
             <h2 className="text-center">Comments</h2>
+
             {blog.comments?.length && blog.comments.length > 0 ? (
               blog.comments?.map((comment: BlogComment, index) => {
                 return (
@@ -89,8 +94,8 @@ const BlogComments = ({ userId, docId }: Props) => {
                         onClick={() => {
                           fbDeleteCommentFromBlog({
                             comment,
-                            userId: comment.commenterUid,
-                            docId: blog.docId,
+                            userId,
+                            docId,
                           });
                           setAdding(!adding);
                         }}

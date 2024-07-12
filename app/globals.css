@@ -100,6 +100,8 @@ cursor-pointer
     @apply 
     text-green-800
     dark:text-green-200
+    hover:dark:text-green-300
+    hover:text-green-700
     bg-green-500
     bg-opacity-30
     border-green-700
@@ -159,3 +161,14 @@ input[type="file"] {
 input[type="file"]::-webkit-file-upload-button {
    @apply btn btn-blue
 }
+
+
+
+.comment-highlight {
+    transition: background-color 2s ease-in-out;
+    background-color: rgb(251, 230, 0);
+}
+.comment {
+    background-color: black;
+}
+  

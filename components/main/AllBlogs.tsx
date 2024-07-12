@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { fbGetUsersBlogs } from "@/firebase/fbGetUsersBlogs";
 import BlogCard from "../Cards/BlogCard";
+import Loader from "../Loader";
 
 interface Props {
   firstName: MaybeString;
@@ -25,7 +26,9 @@ const AllBlogs = ({ firstName, userId }: Props) => {
       userId && fetchBlogData();
     }
   }, [userId]);
-
+  if (!blogs || !firstName) {
+    return <Loader />;
+  }
   return (
     <div>
       <h1 className="text-center">{firstName}&#39;s Blogs</h1>

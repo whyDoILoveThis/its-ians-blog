@@ -1,11 +1,12 @@
 interface Blog {
+    docId: string,
     id: string;
     title: string;
     text: string;
     imageUrl?: string;
     creatorUid: string,
     createdAt: string,
-    docId: string,
+    lastUpdated: string,
     comments?: [
       {text: string;
       commenterUid: string;

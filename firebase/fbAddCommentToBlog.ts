@@ -5,7 +5,7 @@ import { doc, updateDoc, arrayUnion } from "firebase/firestore";
 interface params {
   comment: {
     text: string;
-    commenterUid: string;
+    commenterUid: string | null | undefined;
     commenterFullName: string | null | undefined;
     userPhotoUrl: string | null | undefined;
     createdAt: string;

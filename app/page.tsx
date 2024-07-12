@@ -1,4 +1,6 @@
 "use client";
+import UserCardRegular from "@/components/Cards/UserCardRegular";
+import Loader from "@/components/Loader";
 import { fbGetAllUsers } from "@/firebase/fbGetAllUsers";
 import { fbGetUserById } from "@/firebase/fbGetUserById";
 import { fbSaveUser } from "@/firebase/fbSaveUser";
@@ -9,7 +11,7 @@ import { useEffect, useState } from "react";
 export default function Home() {
   const clerkUser = useUser();
   const user = clerkUser.user;
-  const { userId } = useAuth();
+  const { userId, isLoaded } = useAuth();
   const [allUsers, setAllUsers] = useState<User[]>([]);
   const [theUser, setTheUser] = useState<User | null>();
   const [saved, setSaved] = useState(false);
@@ -45,30 +47,30 @@ export default function Home() {
   }, [userId, saved]);
 
   return (
-    <>
-      <p className="text-3xl font-semibold">👋🏽Hey, {user?.firstName}</p>
-      {theUser?.userId !== userId && (
-        <>
-          <p>Save your info so that people can find your page</p>
-          <button className="btn btn-green" onClick={handleSaveMyInfo}>
-            Save Me!
-          </button>
-        </>
-      )}
-      <article>
-        <h2 className="text-2xl">All Users</h2>
+    <div>
+      {theUser?.photoUrl ? (
         <div>
-          {allUsers.map((user: User) => (
-            <div key={user.userId}>
-              <p>{user.firstName}</p>
-              <Link href={`/user/${user.userId}`}>
-                {user.firstName}&#39;s Profile
-              </Link>
+          <p className="text-3xl font-semibold">👋🏽Hey, {user?.firstName}</p>
+          {theUser?.userId !== userId && (
+            <>
+              <p>Save your info so that people can find your page</p>
+              <button className="btn btn-green" onClick={handleSaveMyInfo}>
+                Save Me!
+              </button>
+            </>
+          )}
+          <article>
+            <h2 className="text-2xl m-2">All Users</h2>
+            <div className="flex flex-col gap-2">
+              {allUsers.map((user: User, index) => (
+                <UserCardRegular key={index} user={user} />
+              ))}
             </div>
-          ))}
-          <p>{theUser?.fullName}</p>
+          </article>
         </div>
-      </article>
-    </>
+      ) : (
+        <Loader />
+      )}
+    </div>
   );
 }
