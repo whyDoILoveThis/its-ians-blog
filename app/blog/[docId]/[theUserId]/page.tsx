@@ -85,13 +85,17 @@ const Page = ({
                   </p>
                 </div>
               </div>
-              <Image
-                className="mb-2 rounded-2xl border border-slate-500 bg-black bg-opacity-15"
-                width={300}
-                height={100}
-                src={theBlog?.imageUrl}
-                alt="Blog Header Img"
-              />
+              {theBlog?.imageUrl ? (
+                <Image
+                  className="mb-2 rounded-2xl border border-slate-500 bg-black bg-opacity-15"
+                  width={300}
+                  height={100}
+                  src={theBlog?.imageUrl}
+                  alt="Blog Header Img"
+                />
+              ) : (
+                <Loader />
+              )}
               <UserCardSmall user={fbUser} />
             </div>
           )}

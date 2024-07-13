@@ -25,6 +25,7 @@
 
 .cl-userButtonPopoverCard.cl-userButton-popover.🔒️.cl-internal-8bykxp {
     background: transparent;
+    overflow: visible;
 }
 
 .cl-internal-11ttlho {
@@ -43,10 +44,13 @@
 .cl-userButtonPopoverFooter.🔒️.cl-internal-1857dod {
     background: transparent;
     @apply
+    absolute
     w-fit
     bg-opacity-0
     flex
     place-self-end
+    overflow-visible
+    -bottom-[17px]
 }
 
 .cl-internal-5ghyhf path {

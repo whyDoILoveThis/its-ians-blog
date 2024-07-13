@@ -35,7 +35,7 @@ export default function RootLayout({
             </SignedOut>
             <SignedIn>
               <Nav />
-              <div className="flex flex-col items-center mt-3">{children}</div>
+              <div className="mt-20 flex flex-col items-center">{children}</div>
             </SignedIn>
           </body>
         </html>

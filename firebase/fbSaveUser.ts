@@ -3,7 +3,13 @@ import { db } from "@/lib/firebaseConfig";
 import { doc, setDoc } from "firebase/firestore";
 
 
-
+interface Params {
+  userId: MaybeString;
+  firstName: MaybeString;
+  fullName: MaybeString;
+  email: MaybeString;
+  photoUrl: MaybeString;
+}
 
 export async function fbSaveUser({
   userId,
@@ -11,7 +17,7 @@ export async function fbSaveUser({
   fullName,
   email,
   photoUrl,
-}: User) {
+}: Params) {
  if(userId && fullName){   
      const docId = userId;
  try {
@@ -20,6 +26,7 @@ export async function fbSaveUser({
       userId: userId,
       firstName: firstName,
       fullName: fullName,
+      fullNameLower: fullName.toLowerCase(),
       email: email,
       photoUrl: photoUrl,
     });

@@ -1,6 +1,7 @@
-import React from "react";
+import React, { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import Loader from "../Loader";
 
 interface Props {
   blog: Blog;
@@ -22,7 +23,7 @@ const BlogCard = ({ blog }: Props) => {
             alt={blog.title}
           />
         )}
-        <h2>{blog.title}</h2>
+        <h2 className="text-center">{blog.title}</h2>
         <p className="text-slate-500">{blog.createdAt}</p>
       </Link>
     </li>

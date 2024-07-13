@@ -18,6 +18,10 @@ h3 {
     @apply text-2xl
 }
 
+li {
+    list-style-type: none;
+}
+
 .bg-blur-10 {
     backdrop-filter: blur(10px);
 }
@@ -163,12 +167,16 @@ input[type="file"]::-webkit-file-upload-button {
 }
 
 
-
-.comment-highlight {
-    transition: background-color 2s ease-in-out;
-    background-color: rgb(251, 230, 0);
-}
-.comment {
-    background-color: black;
-}
+@keyframes highlight {
+    from {
+      background-color: yellow;
+    }
+    to {
+      background-color: transparent;
+    }
+  }
+  
+  .highlight {
+    animation: highlight 2s ease-in-out;
+  }
   

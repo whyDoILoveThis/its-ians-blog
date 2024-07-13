@@ -10,6 +10,7 @@ import { fbUpdateBlog } from "@/firebase/fbUpdateBlog";
 import { useAuth } from "@clerk/nextjs";
 import { v4 as uuidv4 } from "uuid";
 import { useRouter } from "next/navigation";
+import Loader from "../Loader";
 
 interface Props {
   existingImageUrl?: string;
@@ -36,9 +37,11 @@ const BlogForm = ({
   const [isUpToDateNoImg, setIsUpToDateNoImg] = useState(false);
   const newDocId = uuidv4();
   const router = useRouter();
+  const [loading, setLoading] = useState(false);
 
   const { userId } = useAuth();
   const todaysDate = new Date();
+
   useEffect(() => {
     if (existingTitle) {
       setTitle(existingTitle);
@@ -95,6 +98,7 @@ const BlogForm = ({
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setLoading(true);
 
     if (docId) {
       if (image) {
@@ -187,6 +191,9 @@ const BlogForm = ({
       router.push(`blog/${newDocId}/${userId}`);
     }
   };
+  if (loading) {
+    return <Loader />;
+  }
   return (
     <div>
       {!existingText && <h1 className="text-center mb-8">Create New Blog</h1>}
