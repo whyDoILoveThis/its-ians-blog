@@ -31,10 +31,11 @@ li {
     z-50
     fixed
     top-0
+    
     bg-black
     bg-opacity-15
     w-screen
-    h-screen
+    h-[110vh]
     flex
     flex-col
     justify-center
@@ -151,7 +152,8 @@ cursor-pointer
     border-white
     border-opacity-35 
     focus:outline-none
-    w-full
+    w-[280px]
+    max-w-[280px]
 }
 
 input#image {
@@ -160,6 +162,8 @@ input#image {
 
 input[type="file"] {
     background-color: transparent;
+    width: 90%;
+    max-width: 280px;
 }
 
 input[type="file"]::-webkit-file-upload-button {

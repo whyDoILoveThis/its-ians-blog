@@ -54,7 +54,7 @@ const PopOver = ({
             >
               X
             </button>
-            <p className="text-2xl mt-8">{title}</p>
+            <p className="text-2xl text-center mt-8">{title}</p>
             {lines.map((line, index) => (
               <p key={index} className="text-sm mb-5">
                 {line && line}

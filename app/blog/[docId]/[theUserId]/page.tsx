@@ -8,6 +8,7 @@ import BlogForm from "@/components/main/BlogForm";
 import RenderMarkdown from "@/components/main/RenderMarkdown";
 import { fbGetBlogById } from "@/firebase/fbGetBlogById";
 import { fbGetUserById } from "@/firebase/fbGetUserById";
+import { useAuth } from "@clerk/nextjs";
 import Image from "next/image";
 import React, { useEffect, useState } from "react";
 
@@ -16,6 +17,7 @@ const Page = ({
 }: {
   params: { docId: string; theUserId: string };
 }) => {
+  const { userId } = useAuth();
   const [theBlog, setTheBlog] = useState<Blog | null>();
   const [edit, setEdit] = useState(false);
   const [updated, setUpdated] = useState(false);
@@ -41,7 +43,7 @@ const Page = ({
 
   return (
     <article className="flex flex-col items-center">
-      {!edit && theBlog?.creatorUid === theUserId ? (
+      {!edit && theBlog?.creatorUid === userId ? (
         <button
           className="btn"
           onClick={() => {
@@ -51,6 +53,8 @@ const Page = ({
           Edit
         </button>
       ) : (
+        edit &&
+        theBlog?.creatorUid === userId &&
         theBlog?.creatorUid === theUserId && (
           <PopOver
             value={edit}
@@ -88,7 +92,7 @@ const Page = ({
               {theBlog?.imageUrl ? (
                 <Image
                   className="mb-2 rounded-2xl border border-slate-500 bg-black bg-opacity-15"
-                  width={300}
+                  width={500}
                   height={100}
                   src={theBlog?.imageUrl}
                   alt="Blog Header Img"

@@ -196,7 +196,9 @@ const BlogForm = ({
   }
   return (
     <div>
-      {!existingText && <h1 className="text-center mb-8">Create New Blog</h1>}
+      {!existingText && (
+        <h1 className="text-center mt-4 mb-8">Create New Blog</h1>
+      )}
       <form
         className="flex flex-col gap-4 items-center"
         onSubmit={handleSubmit}
