@@ -4,11 +4,18 @@ import Loader from "@/components/Loader";
 import AllBlogs from "@/components/main/AllBlogs";
 import SearchBlogs from "@/components/main/SearchBlogs";
 import { fbGetUserById } from "@/firebase/fbGetUserById";
+import { scrollToTop } from "@/utils";
+import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
 
 const Page = ({ params: { theUserId } }: { params: { theUserId: string } }) => {
   const [theUser, setTheUser] = useState<User | null>();
   const [showSearch, setShowSearch] = useState(false);
+  const router = useRouter();
+
+  useEffect(() => {
+    scrollToTop();
+  }, []);
 
   useEffect(() => {
     const fetchUser = async () => {
@@ -18,13 +25,15 @@ const Page = ({ params: { theUserId } }: { params: { theUserId: string } }) => {
     fetchUser();
   }, [theUserId]);
 
+  if (theUserId === "user_2mzVBJENtgjNrQ8Ck1dFFZrScBK") {
+    router.back();
+  }
   if (!theUser) {
     return <Loader />;
   }
 
   return (
     <div className="flex flex-col items-center gap-4">
-      <UserCardRegular user={theUser} />
       <div className="flex justify-center gap-2 mb-2">
         {showSearch && (
           <button

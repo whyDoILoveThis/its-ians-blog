@@ -3,13 +3,7 @@ import { doc, updateDoc, arrayRemove } from "firebase/firestore";
 
 
 interface Params {
-    comment: {
-        text: string;
-        commenterUid: string;
-        commenterFullName: string | null | undefined;
-        userPhotoUrl: string | null | undefined;
-        createdAt: string;
-      };
+    comment: BlogComment;
   userId: string | null | undefined;
   docId: string;
 }

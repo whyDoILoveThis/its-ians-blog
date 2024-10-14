@@ -9,7 +9,7 @@ interface Props {
   userId: string;
 }
 
-const UserSearch = ({ userId }: Props) => {
+const BlogSearch = ({ userId }: Props) => {
   const [searchQuery, setSearchQuery] = useState("");
   const [results, setResults] = useState<Blog[]>([]);
   const [loading, setLoading] = useState(false);
@@ -35,12 +35,9 @@ const UserSearch = ({ userId }: Props) => {
 
   return (
     <div className="flex flex-col items-center justify-center w-[300px]">
-      <form
-        className="input w-fit flex justify-between"
-        onSubmit={handleSearch}
-      >
+      <form className="input flex justify-between" onSubmit={handleSearch}>
         <input
-          className="bg-transparent focus:outline-none"
+          className="bg-transparent w-[150px] focus:outline-none"
           type="text"
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
@@ -65,4 +62,4 @@ const UserSearch = ({ userId }: Props) => {
   );
 };
 
-export default UserSearch;
+export default BlogSearch;

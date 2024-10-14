@@ -23,9 +23,9 @@ const UserSearch = () => {
 
   return (
     <div>
-      <form className="input" onSubmit={handleSearch}>
+      <form className="input flex justify-between" onSubmit={handleSearch}>
         <input
-          className="bg-transparent focus:outline-none placeholder:text-slate-200 "
+          className="bg-transparent w-[150px] focus:outline-none placeholder:text-slate-200 "
           type="text"
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}

@@ -18,6 +18,7 @@ export const fbGetAllUsers = async (): Promise<User[]> => {
         userId: data.userId,
         firstName: data.firstName,
         fullName: data.fullName,
+        fullNameLower: data.fullNameLower,
         email: data.email,
         photoUrl: data.photoUrl,
       };

@@ -7,21 +7,14 @@ interface Blog {
     creatorUid: string,
     createdAt: string,
     lastUpdated: string,
-    comments?: [
-      {text: string;
-      commenterUid: string;
-      commenterFullName: string;
-      userPhotoUrl: string;
-      createdAt: string;
-    }
-    ]
+    comments?: BlogComment[],
   }
 
   interface BlogComment {
     
       text: string;
-      commenterUid: string;
-      commenterFullName: string | null | undefined;
+      commenterUid?: string | undefined;
+      commenterFullName?: string | null | undefined;
       userPhotoUrl: string | null | undefined;
       createdAt: string;
    

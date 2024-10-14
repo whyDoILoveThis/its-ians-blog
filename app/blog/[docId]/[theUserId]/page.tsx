@@ -8,6 +8,7 @@ import BlogForm from "@/components/main/BlogForm";
 import RenderMarkdown from "@/components/main/RenderMarkdown";
 import { fbGetBlogById } from "@/firebase/fbGetBlogById";
 import { fbGetUserById } from "@/firebase/fbGetUserById";
+import { scrollToTop } from "@/utils";
 import { useAuth } from "@clerk/nextjs";
 import Image from "next/image";
 import React, { useEffect, useState } from "react";
@@ -22,6 +23,10 @@ const Page = ({
   const [edit, setEdit] = useState(false);
   const [updated, setUpdated] = useState(false);
   const [fbUser, setFbUser] = useState<User | null | undefined>();
+
+  useEffect(() => {
+    scrollToTop();
+  }, []);
 
   useEffect(() => {
     const fetchBlog = async () => {
@@ -107,7 +112,7 @@ const Page = ({
           <div className="my-8">
             <h1 className="text-center">{theBlog?.title}</h1>
           </div>
-          <div className=" max-w-[800px]">
+          <div className=" max-w-[800px] p-6">
             <RenderMarkdown htmlContent={theBlog?.text} />
           </div>
         </article>

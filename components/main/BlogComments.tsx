@@ -18,8 +18,10 @@ const BlogComments = ({ userId, docId }: Props) => {
   const [blog, setBlog] = useState<Blog | null>();
   const [adding, setAdding] = useState(false);
   const { user } = useUser();
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
+    setLoading(true);
     const fetchBlog = async () => {
       setBlog(await fbGetBlogById(userId, docId));
     };
@@ -29,16 +31,25 @@ const BlogComments = ({ userId, docId }: Props) => {
         fetchBlog();
       }
     }, 1000);
+    setLoading(false);
   }, [userId, docId, adding]);
 
   const handleSubmit = async (e: React.FormEvent) => {
+    setLoading(true);
     e.preventDefault();
     const comment = {
       text: value,
       commenterUid: user?.id,
       commenterFullName: user?.fullName,
       userPhotoUrl: user?.imageUrl,
-      createdAt: new Date().toDateString(),
+      createdAt: new Date().toLocaleString([], {
+        year: "numeric",
+        month: "2-digit",
+        day: "2-digit",
+        hour: "numeric",
+        minute: "2-digit",
+        hour12: true, // Optional: For 12-hour format (AM/PM)
+      }),
     };
     await fbAddCommentToBlog({
       comment,
@@ -46,7 +57,24 @@ const BlogComments = ({ userId, docId }: Props) => {
       docId,
     });
     setValue("");
+    setLoading(false);
   };
+
+  const handleDelete = async (
+    comment: BlogComment,
+    userId: string,
+    docId: string
+  ) => {
+    setLoading(true);
+    await fbDeleteCommentFromBlog({
+      comment,
+      userId,
+      docId,
+    });
+    setLoading(false);
+  };
+
+  console.log(user);
 
   if (!blog) {
     return <Loader />;
@@ -68,16 +96,25 @@ const BlogComments = ({ userId, docId }: Props) => {
                     <div className="flex items-center gap-2">
                       <Link
                         href={`/user/${comment.commenterUid}`}
-                        className="flex gap-2 bg-black bg-opacity-30 border-thin h-fit w-fit p-2 px-3 rounded-full"
+                        className={`${
+                          comment.commenterFullName === "anonymous" && "p-0"
+                        } flex gap-2 bg-black bg-opacity-30 border-thin h-fit w-fit p-2 px-3 rounded-full`}
                       >
-                        <Image
-                          className=" rounded-full"
-                          width={25}
-                          height={20}
-                          alt="asdfasd"
-                          src={comment.userPhotoUrl}
-                        />
-                        <p className=" text-nowrap">
+                        {comment.userPhotoUrl !== "0000" && (
+                          <Image
+                            className=" rounded-full"
+                            width={25}
+                            height={20}
+                            alt="asdfasd"
+                            src={comment.userPhotoUrl}
+                          />
+                        )}
+                        <p
+                          className={`${
+                            comment.commenterFullName === "anonymous" &&
+                            "text-slate-400 "
+                          } text-nowrap`}
+                        >
                           {comment.commenterFullName}
                         </p>
                       </Link>
@@ -91,15 +128,11 @@ const BlogComments = ({ userId, docId }: Props) => {
                     <button
                       className="btn btn-trash w-fit"
                       onClick={() => {
-                        fbDeleteCommentFromBlog({
-                          comment,
-                          userId,
-                          docId,
-                        });
+                        handleDelete(comment, userId, docId);
                         setAdding(!adding);
                       }}
                     >
-                      <CiTrash />
+                      {loading ? <Loader /> : <CiTrash />}
                     </button>
                   )}
                   {user?.id === comment.commenterUid && user?.id !== userId && (
@@ -114,7 +147,22 @@ const BlogComments = ({ userId, docId }: Props) => {
                         setAdding(!adding);
                       }}
                     >
-                      <CiTrash />
+                      {loading ? <Loader /> : <CiTrash />}
+                    </button>
+                  )}
+                  {comment.commenterUid === "0000" && user?.id !== userId && (
+                    <button
+                      className="btn btn-trash w-fit"
+                      onClick={() => {
+                        fbDeleteCommentFromBlog({
+                          comment,
+                          userId,
+                          docId,
+                        });
+                        setAdding(!adding);
+                      }}
+                    >
+                      {loading ? <Loader /> : <CiTrash />}
                     </button>
                   )}
                 </div>

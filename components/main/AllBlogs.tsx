@@ -50,6 +50,7 @@ const AllBlogs = ({ firstName, theUserId }: Props) => {
         <ul className="flex flex-col gap-4 p-4">
           {blogs.map((blog, index) => (
             <div
+              key={index}
               onClick={() => {
                 scrollToTop();
                 setLoading(true);

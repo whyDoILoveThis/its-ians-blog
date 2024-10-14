@@ -1,14 +1,12 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
-import { ClerkProvider, SignedIn, SignedOut } from "@clerk/nextjs";
+import { ClerkProvider } from "@clerk/nextjs";
 import "./globals.css";
 import "../styles/Quill.css";
 import "../styles/Clerk.css";
 import { ThemeProvider } from "@/context/ThemeContext";
 import Nav from "@/components/main/Nav";
 import "../middleware";
-import Link from "next/link";
-import SignMeIn from "@/components/main/SignMeIn";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -27,13 +25,8 @@ export default function RootLayout({
       <ThemeProvider>
         <html lang="en">
           <body className="min-h-screen bg-slate-200 dark:bg-gray-900 text-black dark:text-white">
-            <SignedOut>
-              <SignMeIn />
-            </SignedOut>
-            <SignedIn>
-              <Nav />
-              <div className="mt-20 flex flex-col items-center">{children}</div>
-            </SignedIn>
+            <Nav />
+            <div className="mt-20 flex flex-col items-center">{children}</div>
           </body>
         </html>
       </ThemeProvider>

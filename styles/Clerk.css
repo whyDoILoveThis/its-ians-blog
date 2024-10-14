@@ -41,6 +41,10 @@
     translate-x-[-10px]
 }
 
+.cl-userButtonPopoverFooter {
+    display: none;
+}
+
 .cl-userButtonPopoverFooter.🔒️.cl-internal-1857dod {
     background: transparent;
     @apply
@@ -71,6 +75,7 @@
    @apply
    border
    border-white
+   rounded-2xl
    border-opacity-30
    
 
@@ -85,7 +90,7 @@
 }
 
 
-.cl-navbarMobileMenuRow.🔒️.cl-internal-1cftg7i,.cl-navbarMobileMenuButton.cl-button.🔒️.cl-internal-tn25c7{
+.cl-navbarMobileMenuRow.🔒️.cl-internal-1cftg7i,.cl-navbarMobileMenuButton.cl-button.🔒️.cl-internal-tn25c7, .cl-navbar.🔒️.cl-internal-13lvar6{
   background: transparent;
   backdrop-filter: blur(8px);
     @apply
@@ -99,7 +104,7 @@
 }
 
 
-.cl-navbarButton.cl-button.cl-navbarButton__account.cl-button__account.cl-active.🔒️.cl-internal-q7chm5 {
+.cl-internal-pp7u0o,.cl-navbarButton.cl-button.cl-navbarButton__account.cl-button__account.cl-active.🔒️.cl-internal-q7chm5 {
     @apply
     text-slate-700
     dark:text-white
@@ -125,6 +130,10 @@
     background: transparent;
 }
 
+
+.cl-footer {
+    display: none;
+}
 
 .cl-footer.🔒️.cl-internal-1mdy2np {
     opacity: 0;
@@ -171,6 +180,7 @@
     dark:bg-white
     dark:bg-opacity-20
 }
+
 
 .cl-userButtonPopoverCard.cl-userButton-popover.🔒️.cl-internal-8bykxp {
     background: transparent;

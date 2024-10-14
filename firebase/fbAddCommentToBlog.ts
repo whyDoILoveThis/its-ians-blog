@@ -20,6 +20,17 @@ export async function fbAddCommentToBlog({
   docId,
 }: params) {
   try {
+    if(comment.commenterFullName === null || comment.commenterFullName === undefined) {
+      comment.commenterFullName = "anonymous";
+    }
+    if(comment.commenterUid === null || comment.commenterUid === undefined) {
+      comment.commenterUid = "0000";
+    }
+    if(comment.userPhotoUrl === null || comment.userPhotoUrl === undefined) {
+      comment.userPhotoUrl = "0000";
+    }
+    console.log(comment);
+    
     const docRef = doc(db, `blogs-${userId}`, docId);
     await updateDoc(docRef, {
       comments: arrayUnion(comment),
