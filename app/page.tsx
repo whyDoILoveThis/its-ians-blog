@@ -11,6 +11,7 @@ import { SignedIn, SignedOut, useAuth, useUser } from "@clerk/nextjs";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import SplashPage from "@/components/SplashPage/SplashPage";
+import Search from "@/components/Icons/Search";
 
 export default function Home() {
   const clerkUser = useUser();
@@ -104,9 +105,9 @@ export default function Home() {
                     onClick={() => {
                       setShowSearch(true);
                     }}
-                    className="btn"
+                    className="btn btn-round"
                   >
-                    Search
+                    <Search />
                   </button>
                 )}
               </div>

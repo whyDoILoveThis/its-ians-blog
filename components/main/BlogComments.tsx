@@ -8,6 +8,8 @@ import Link from "next/link";
 import { fbDeleteCommentFromBlog } from "@/firebase/fbDeleteCommentFromBlog";
 import { CiTrash } from "react-icons/ci";
 import Loader from "../Loader";
+import LoaderSpinSmall from "../LoaderSpinSmall";
+import { log } from "console";
 interface Props {
   userId: string;
   docId: string;
@@ -16,7 +18,7 @@ interface Props {
 const BlogComments = ({ userId, docId }: Props) => {
   const [value, setValue] = useState("");
   const [blog, setBlog] = useState<Blog | null>();
-  const [adding, setAdding] = useState(false);
+  const [adding, setAdding] = useState(false); //This is a trigger that when flipped will refetch the blog to refresh the comments
   const { user } = useUser();
   const [loading, setLoading] = useState(false);
 
@@ -31,7 +33,9 @@ const BlogComments = ({ userId, docId }: Props) => {
         fetchBlog();
       }
     }, 1000);
-    setLoading(false);
+    setTimeout(() => {
+      setLoading(false);
+    }, 1000);
   }, [userId, docId, adding]);
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -65,13 +69,18 @@ const BlogComments = ({ userId, docId }: Props) => {
     userId: string,
     docId: string
   ) => {
-    setLoading(true);
-    await fbDeleteCommentFromBlog({
-      comment,
-      userId,
-      docId,
-    });
-    setLoading(false);
+    try {
+      await fbDeleteCommentFromBlog({
+        comment,
+        userId,
+        docId,
+      });
+    } catch (err) {
+      console.log(err);
+    }
+    setTimeout(() => {
+      setLoading(false);
+    }, 1000);
   };
 
   console.log(user);
@@ -98,7 +107,7 @@ const BlogComments = ({ userId, docId }: Props) => {
                         href={`/user/${comment.commenterUid}`}
                         className={`${
                           comment.commenterFullName === "anonymous" && "p-0"
-                        } flex gap-2 bg-black bg-opacity-30 border-thin h-fit w-fit p-2 px-3 rounded-full`}
+                        } link !flex gap-2 bg-black bg-opacity-30 border-thin h-fit w-fit p-2 px-3 rounded-full`}
                       >
                         {comment.userPhotoUrl !== "0000" && (
                           <Image
@@ -124,20 +133,22 @@ const BlogComments = ({ userId, docId }: Props) => {
                     </div>
                   )}
                   <p>{comment.text}</p>
+                  {/* if the logged in user is the blog author */}
                   {user?.id === userId && (
                     <button
-                      className="btn btn-trash w-fit"
+                      className="btn btn-round hover:btn-red w-fit"
                       onClick={() => {
                         handleDelete(comment, userId, docId);
                         setAdding(!adding);
                       }}
                     >
-                      {loading ? <Loader /> : <CiTrash />}
+                      {loading ? <LoaderSpinSmall /> : <CiTrash />}
                     </button>
                   )}
+                  {/* if comment is from blog author & the author is the one logged in */}
                   {user?.id === comment.commenterUid && user?.id !== userId && (
                     <button
-                      className="btn btn-trash w-fit"
+                      className="btn  w-fit"
                       onClick={() => {
                         fbDeleteCommentFromBlog({
                           comment,
@@ -147,13 +158,15 @@ const BlogComments = ({ userId, docId }: Props) => {
                         setAdding(!adding);
                       }}
                     >
-                      {loading ? <Loader /> : <CiTrash />}
+                      {loading ? <LoaderSpinSmall /> : <CiTrash />}
                     </button>
                   )}
+                  {/* if comment is from anonymous user */}
                   {comment.commenterUid === "0000" && user?.id !== userId && (
                     <button
-                      className="btn btn-trash w-fit"
+                      className="btn btn-round hover:!bg-red-500 hover:!bg-opacity-20 hover:border-red-500 hover:!text-red-500 text-xl transition-colors w-fit"
                       onClick={() => {
+                        setLoading(true);
                         fbDeleteCommentFromBlog({
                           comment,
                           userId,
@@ -162,7 +175,7 @@ const BlogComments = ({ userId, docId }: Props) => {
                         setAdding(!adding);
                       }}
                     >
-                      {loading ? <Loader /> : <CiTrash />}
+                      {loading ? <LoaderSpinSmall /> : <CiTrash />}
                     </button>
                   )}
                 </div>

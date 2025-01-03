@@ -1,23 +1,28 @@
-// components/ThemeToggle.tsx
 "use client";
-import React from "react";
-import { useTheme } from "../../context/ThemeContext";
-import { PiMoonStarsDuotone, PiSunDuotone } from "react-icons/pi";
-const ThemeToggle = () => {
+
+import * as React from "react";
+import { IoFlashlight } from "react-icons/io5";
+import { GiNightSky } from "react-icons/gi";
+import { useTheme } from "next-themes";
+
+export function ModeToggle() {
   const { theme, setTheme } = useTheme();
+  const isDark = theme === "dark" || null;
 
   return (
     <button
-      onClick={() => setTheme(theme === "light" ? "dark" : "light")}
-      className="p-2 rounded-full focus:outline-none"
+      className="btn btn-ghost btn-round"
+      onClick={() => setTheme(isDark ? "light" : "dark")}
     >
-      {theme === "light" ? (
-        <PiMoonStarsDuotone className="w-6 h-6 text-slate-700" />
-      ) : (
-        <PiSunDuotone className="w-6 h-6 text-slate-200" />
-      )}
+      <div>
+        {theme === "dark" ? (
+          <IoFlashlight className="text-xl" />
+        ) : theme === "light" ? (
+          <GiNightSky className="text-2xl" />
+        ) : (
+          !theme && <IoFlashlight className="text-xl" />
+        )}
+      </div>
     </button>
   );
-};
-
-export default ThemeToggle;
+}

@@ -2,6 +2,7 @@ import { useState } from "react";
 
 interface Props {
   btnTxt: string;
+  btnClassNames?: string;
   title: string;
   line1?: string;
   line2?: string;
@@ -17,6 +18,7 @@ interface Props {
 
 const PopOver = ({
   btnTxt,
+  btnClassNames,
   title,
   line1,
   line2,
@@ -38,7 +40,7 @@ const PopOver = ({
           onClick={() => {
             setShow(true);
           }}
-          className="btn"
+          className={`btn ${btnClassNames && btnClassNames}`}
         >
           {btnTxt}
         </button>
@@ -50,7 +52,7 @@ const PopOver = ({
               onClick={() => {
                 setShow(false);
               }}
-              className="btn btn-close"
+              className={`btn btn-close`}
             >
               X
             </button>
@@ -62,7 +64,7 @@ const PopOver = ({
             ))}
           </div>
           {isConfirmPop && (
-            <div>
+            <div className="flex gap-4">
               <button
                 className="btn btn-green"
                 onClick={() => {

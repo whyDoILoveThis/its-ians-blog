@@ -14,15 +14,16 @@ const UserCardRegular = ({ user }: Props) => {
     return <Loader />;
   }
   return (
-    <div className="border border-slate-500 rounded-xl p-3 bg-black bg-opacity-10">
+    <>
       {user.photoUrl && user.firstName && (
         <Link
           onClick={() => {
             setLoading(true);
           }}
+          className="link border border-slate-500 rounded-xl p-3 bg-black bg-opacity-10"
           href={`/user/${user.userId}`}
         >
-          <div className="flex gap-1">
+          <div className="flex items-center gap-1">
             <Image
               width={25}
               height={25}
@@ -34,8 +35,8 @@ const UserCardRegular = ({ user }: Props) => {
           </div>
           <p>{user.email}</p>
         </Link>
-      )}{" "}
-    </div>
+      )}
+    </>
   );
 };
 

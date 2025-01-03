@@ -1,10 +1,10 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import ThemeToggle from "../Buttons/ThemeToggle";
 import Link from "next/link";
 import { useAuth, UserButton } from "@clerk/nextjs";
 import { scrollToTop } from "@/utils";
 import { fbGetUserById } from "@/firebase/fbGetUserById";
+import { ModeToggle } from "../Buttons/ThemeToggle";
 
 const Nav = () => {
   const { userId } = useAuth();
@@ -38,19 +38,19 @@ const Nav = () => {
         onClick={() => {
           scrollToTop();
         }}
-        className="text-xl font-bold"
+        className="text-xl font-bold link"
         href={"/"}
       >
         ITS Ian&#39;s Blog
       </Link>
-      <div className="flex items-center">
+      <div className="flex gap-2 items-center">
         {user !== null && (
           <div className="mr-4">
             <Link
               onClick={() => {
                 scrollToTop();
               }}
-              className="hover:underline"
+              className="hover:underline link"
               href={"/create"}
             >
               Create
@@ -58,7 +58,7 @@ const Nav = () => {
           </div>
         )}
 
-        <ThemeToggle />
+        <ModeToggle />
         <UserButton />
       </div>
     </nav>

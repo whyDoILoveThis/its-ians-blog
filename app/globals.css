@@ -2,35 +2,59 @@
 @tailwind components;
 @tailwind utilities;
 
-*,*::before,*::after {
-    box-sizing: border-box;
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
 }
 
 h1 {
-    @apply text-4xl
+  @apply text-4xl;
 }
 
 h2 {
-    @apply 
-    text-3xl
-    mt-6
+  @apply text-2xl
+  font-bold
+    mt-6;
 }
 
 h3 {
-    @apply text-2xl
+  @apply text-xl;
+}
+
+p {
+  line-height: 1.78rem;
+}
+
+a {
+  color: #ff91ff;
+  text-wrap: nowrap;
+  display: block;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+.link {
+  color: #f4f4f4;
+  display: unset;
+}
+
+.link:hover {
+  text-decoration: none;
 }
 
 li {
-    list-style-type: none;
+  list-style-type: none;
 }
 
 .bg-blur-10 {
-    backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
 }
 
 .pop-over {
-    @apply
-    z-50
+  @apply z-50
     fixed
     top-0
     
@@ -42,115 +66,62 @@ li {
     flex-col
     justify-center
     items-center
-    bg-blur-10
+    bg-blur-10;
 }
 
-
-
-.btn {
-@apply
-border
-border-black
-border-opacity-35
-bg-black
-bg-opacity-20
-hover:bg-opacity-15
-hover:border-opacity-20
-/*Dark*/
-dark:border
-dark:border-white
-dark:border-opacity-35
-dark:bg-white
-dark:bg-opacity-20
-dark:hover:bg-opacity-15
-dark:hover:border-opacity-20
-px-4
-rounded-full
-cursor-pointer
+.loader-spinner {
+  width: 48px;
+  height: 48px;
+  border: 5px solid #ffffff4c;
+  border-bottom-color: #808fbc;
+  border-radius: 50%;
+  display: inline-block;
+  box-sizing: border-box;
+  animation: rotation 1s linear infinite;
 }
 
-.btn-link {
-    text-decoration: underline;
+@keyframes rotation {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
 }
 
-.btn-blue {
-    @apply  
-    text-blue-950
-    dark:text-blue-200
-    bg-blue-500 
-    bg-opacity-45   
-    hover:bg-opacity-55
-    dark:hover:bg-opacity-20
-    dark:hover:border-blue-700
-    border-blue-600
-    dark:bg-blue-500 
-    dark:bg-opacity-25   
-    dark:border-blue-600
+.loader-spin-small {
+  width: 15px;
+  height: 15px;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: radial-gradient(farthest-side, #b7b7b7 94%, #0000) top/2px 2px
+      no-repeat,
+    conic-gradient(#0000 30%, #adadad);
+  -webkit-mask: radial-gradient(farthest-side, #0000 calc(100% - 2px), #000 0);
+  animation: l13 1s infinite linear;
 }
-
-.btn-red {
-    @apply 
-    text-red-800
-    dark:text-red-200
-    hover:dark:text-red-300
-    hover:text-red-700
-    bg-red-500
-    bg-opacity-30
-    border-red-700
-    hover:bg-opacity-25
-    hover:border-opacity-50
-    hover:text-opacity-75
-    dark:bg-red-500
-    dark:bg-opacity-15
-    dark:border-opacity-80
-    hover:dark:border-opacity-60
-    dark:border-red-400
-}
-
-.btn-green {
-    @apply 
-    text-green-800
-    dark:text-green-200
-    hover:dark:text-green-300
-    hover:text-green-700
-    bg-green-500
-    bg-opacity-30
-    border-green-700
-    hover:bg-opacity-25
-    hover:border-opacity-50
-    hover:text-opacity-75
-    dark:bg-green-500
-    dark:bg-opacity-15
-    dark:border-opacity-80
-    hover:dark:border-opacity-60
-    dark:border-green-400
-}
-
-.btn-trash {
-    @apply
-    p-1
-    btn-red
+@keyframes l13 {
+  100% {
+    transform: rotate(1turn);
+  }
 }
 
 .btn-close {
-    @apply
-    p-2
+  @apply p-2
     py-0
     font-bold
     text-lg
-    btn-red
     absolute
     right-20
-  }
-
+    -translate-y-4;
+}
 
 .border-thin {
-    @apply border border-white border-opacity-35
+  @apply border border-white border-opacity-35;
 }
 
 .input {
-    @apply
-    bg-black
+  @apply bg-black
     bg-opacity-25
     p-2 px-4
     rounded-full
@@ -159,34 +130,30 @@ cursor-pointer
     border-opacity-35 
     focus:outline-none
     w-[280px]
-    max-w-[280px]
+    max-w-[280px];
 }
 
 input#image {
-    @apply flex justify-center
-}
-
-input[type="file"] {
-    background-color: transparent;
-    width: 90%;
-    max-width: 280px;
+  @apply flex justify-center;
 }
 
 input[type="file"]::-webkit-file-upload-button {
-   @apply btn btn-blue
+  display: none;
 }
 
+.dashed-border-2 {
+  border: 2px dashed rgb(118, 130, 152);
+}
 
 @keyframes highlight {
-    from {
-      background-color: yellow;
-    }
-    to {
-      background-color: transparent;
-    }
+  from {
+    background-color: yellow;
   }
-  
-  .highlight {
-    animation: highlight 2s ease-in-out;
+  to {
+    background-color: transparent;
   }
-  
+}
+
+.highlight {
+  animation: highlight 2s ease-in-out;
+}

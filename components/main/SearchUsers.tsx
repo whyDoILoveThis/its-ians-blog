@@ -1,46 +1,74 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { fbSearchUsers } from "@/firebase/fbSearchUsers"; // Import the search function
 import UserCardRegular from "../Cards/UserCardRegular";
+import Search from "../Icons/Search";
 
 const UserSearch = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [results, setResults] = useState<User[]>([]);
+  const [debouncedQuery, setDebouncedQuery] = useState("");
+  const [loader, setLoader] = useState(false);
 
-  const handleSearch = async (e: React.FormEvent) => {
-    e.preventDefault();
-    if (searchQuery.trim() !== "") {
-      try {
-        const users = await fbSearchUsers(searchQuery);
+  // Debounce the search query
+  useEffect(() => {
+    const handler = setTimeout(() => {
+      setDebouncedQuery(searchQuery.trim());
+    }, 500); // Adjust the debounce time (500ms)
 
-        setResults(users);
-      } catch (error) {
-        console.error("Error searching users:", error);
-        // Handle error as needed
+    return () => {
+      clearTimeout(handler); // Cleanup the timeout on input change
+    };
+  }, [searchQuery]);
+
+  // Perform the search when the debounced query changes
+  useEffect(() => {
+    const performSearch = async () => {
+      setLoader(true);
+      if (debouncedQuery !== "") {
+        try {
+          const users = await fbSearchUsers(debouncedQuery);
+          setResults(users);
+        } catch (error) {
+          console.error("Error searching users:", error);
+          // Handle error as needed
+        }
+        setLoader(false);
+      } else {
+        setResults([]); // Clear results if the query is empty
+        setLoader(false);
       }
-    }
-  };
-  console.log(searchQuery);
+    };
+
+    performSearch();
+  }, [debouncedQuery]);
 
   return (
     <div>
-      <form className="input flex justify-between" onSubmit={handleSearch}>
+      <form
+        className="input flex justify-between"
+        onSubmit={(e) => e.preventDefault()}
+      >
         <input
-          className="bg-transparent w-[150px] focus:outline-none placeholder:text-slate-200 "
+          className="bg-transparent w-[150px] focus:outline-none placeholder:text-slate-200"
           type="text"
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
           placeholder="Search users..."
         />
-        <button className="btn" type="submit">
-          Search
+        <button className="btn" type="submit" disabled>
+          <Search />
         </button>
       </form>
       <div className="flex flex-col items-center">
-        <div className="m-2 flex flex-col gap-2">
-          {results.map((user) => (
-            <UserCardRegular key={user.userId} user={user} />
-          ))}
-        </div>
+        {loader ? (
+          <span className="loader-spinner mt-4"></span>
+        ) : (
+          <div className="m-2 flex flex-col gap-2">
+            {results.map((user) => (
+              <UserCardRegular key={user.userId} user={user} />
+            ))}
+          </div>
+        )}
       </div>
     </div>
   );
