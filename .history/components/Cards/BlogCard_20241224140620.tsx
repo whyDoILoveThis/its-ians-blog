@@ -25,7 +25,7 @@ const BlogCard = ({ blog }: Props) => {
             alt={blog.title}
           />
         )}
-        <h2 className="text-center font-bold mt-0 text-wrap">{blog.title}</h2>
+        <h2 className="text-center font-bold mt-0">{blog.title}</h2>
         <p className="text-slate-500">{blog.createdAt}</p>
       </Link>
     </li>

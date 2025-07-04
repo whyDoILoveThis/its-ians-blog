@@ -161,9 +161,7 @@
 .cl-card.cl-signUp-start.🔒️.cl-internal-1p733cp,
 .cl-card.cl-signIn-start.🔒️.cl-internal-1p733cp {
   @apply bg-white
-   !bg-opacity-10
-   backdrop-blur-md
-   
+   !bg-opacity-10;
 }
 
 .cl-card.cl-signUp-start.🔒️.cl-internal-1p733cp *,

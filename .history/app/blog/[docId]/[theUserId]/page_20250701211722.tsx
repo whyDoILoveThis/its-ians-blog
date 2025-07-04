@@ -58,12 +58,6 @@ const Page = ({
     d();
   }, [isDelete, theBlog?.docId, userId, router]);
 
-  useEffect(() => {
-    if (theBlog && !theBlog.imageUrl) {
-      setImageLoaded(true);
-    }
-  }, [theBlog]);
-
   if (!theBlog || !fbUser) {
     return <Loader />;
   }
@@ -127,7 +121,7 @@ const Page = ({
               }}
             />
           ) : (
-            !imageLoaded && <Loader />
+            imageLoaded && <Loader />
           )}
           <div className="flex items-center gap-2">
             <UserCardSmall user={fbUser} />

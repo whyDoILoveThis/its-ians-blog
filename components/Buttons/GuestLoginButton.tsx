@@ -39,7 +39,7 @@ const GuestLoginButton = () => {
 
   return (
     <button
-      className="btn btn-green !text-green-600 text-shadow w-fit mt-4"
+      className="btn btn-green !text-green-700 dark:!text-green-300 text-shadow w-fit mt-4"
       onClick={handleAutoLogin}
     >
       Explore as guest

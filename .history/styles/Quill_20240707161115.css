@@ -1,6 +1,5 @@
 /* Custom styles for React Quill editor */
 .qill {
-    position: relative;
     width: 100%;
     max-width: 780px;
     border: 0;
@@ -19,15 +18,11 @@
   }
 
   .ql-toolbar {
-    position: sticky;
-    top: 45px;
     border-top-left-radius: 10px;
     border-top-right-radius: 10px;
-    background-color: #ffffff00;
-    backdrop-filter: blur(10px);
+    background-color: #00000044;
     width: 70vw;
     max-width: 800px;
-    z-index: 2;
   }
   
   .ql-container {
@@ -37,7 +32,7 @@
     width: 70vw;
     max-width: 800px;
     background-color: #0000004e;
-    z-index: 0;
+
   }
 
   @media screen and (max-width: 550px) {

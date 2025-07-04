@@ -25,7 +25,6 @@ const Page = ({
   const [isDelete, setIsDelete] = useState(false);
   const [edit, setEdit] = useState(false);
   const [updated, setUpdated] = useState(false);
-  const [imageLoaded, setImageLoaded] = useState(false);
   const [fbUser, setFbUser] = useState<User | null | undefined>();
   const router = useRouter();
 
@@ -57,12 +56,6 @@ const Page = ({
 
     d();
   }, [isDelete, theBlog?.docId, userId, router]);
-
-  useEffect(() => {
-    if (theBlog && !theBlog.imageUrl) {
-      setImageLoaded(true);
-    }
-  }, [theBlog]);
 
   if (!theBlog || !fbUser) {
     return <Loader />;
@@ -122,12 +115,9 @@ const Page = ({
               height={100}
               src={theBlog?.imageUrl}
               alt="Blog Header Img"
-              onLoadingComplete={() => {
-                setImageLoaded(true);
-              }}
             />
           ) : (
-            !imageLoaded && <Loader />
+            <Loader />
           )}
           <div className="flex items-center gap-2">
             <UserCardSmall user={fbUser} />

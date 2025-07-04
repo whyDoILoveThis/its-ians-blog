@@ -49,18 +49,14 @@ const BlogForm = ({
   }, []);
 
   useEffect(() => {
-    function stripHtml(html: string) {
-      const tmp = document.createElement("DIV");
-      tmp.innerHTML = html;
-      return tmp.textContent || tmp.innerText || "";
-    }
-    const isSameTitle = title.trim() === (existingTitle ?? "").trim();
-    const isSameText =
-      stripHtml(text).trim() === stripHtml(existingText ?? "").trim();
-    const isSameImage = imageUrl === (existingImageUrl ?? "");
-    const hasImage = image !== null;
+    const noNewImage = image === null;
+    const normalize = (str: string) => str.replace(/\s+/g, " ").trim(); // Replace all whitespace with single spaces
 
-    setIsUpToDate(isSameTitle && isSameText && isSameImage && !hasImage);
+    const titleUnchanged = normalize(title) === normalize(existingTitle ?? "");
+    const textUnchanged = normalize(text) === normalize(existingText ?? "");
+
+    const imageUnchanged =
+      noNewImage && (imageUrl === (existingImageUrl ?? "") || imageUrl === "");
     console.log({
       title,
       existingTitle,
@@ -70,13 +66,7 @@ const BlogForm = ({
       existingImageUrl,
       image,
     });
-    console.log(
-      "TEXT LENGTH",
-      text.length,
-      "EXISTING LENGTH",
-      (existingText ?? "").length
-    );
-    console.log("TEXT === EXISTING:", text === (existingText ?? ""));
+    setIsUpToDate(titleUnchanged && textUnchanged && imageUnchanged);
   }, [
     title,
     text,

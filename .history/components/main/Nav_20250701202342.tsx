@@ -59,11 +59,7 @@ const Nav = () => {
         )}
 
         <ModeToggle />
-        {isLoaded && !userId && (
-          <span className="btn btn-outline">
-            <SignInButton mode="modal" />
-          </span>
-        )}
+        {isLoaded && !userId && <SignInButton />}
         <UserButton />
       </div>
     </nav>

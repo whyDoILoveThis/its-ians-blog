@@ -49,34 +49,13 @@ const BlogForm = ({
   }, []);
 
   useEffect(() => {
-    function stripHtml(html: string) {
-      const tmp = document.createElement("DIV");
-      tmp.innerHTML = html;
-      return tmp.textContent || tmp.innerText || "";
-    }
-    const isSameTitle = title.trim() === (existingTitle ?? "").trim();
-    const isSameText =
-      stripHtml(text).trim() === stripHtml(existingText ?? "").trim();
-    const isSameImage = imageUrl === (existingImageUrl ?? "");
-    const hasImage = image !== null;
+    const noNewImage = image === null;
+    const titleUnchanged = title.trim() === (existingTitle ?? "").trim();
+    const textUnchanged = text.trim() === (existingText ?? "").trim();
+    const imageUnchanged =
+      noNewImage && (imageUrl === (existingImageUrl ?? "") || imageUrl === "");
 
-    setIsUpToDate(isSameTitle && isSameText && isSameImage && !hasImage);
-    console.log({
-      title,
-      existingTitle,
-      titleUnchanged: title.trim() === (existingTitle ?? "").trim(),
-      textUnchanged: text.trim() === (existingText ?? "").trim(),
-      imageUrl,
-      existingImageUrl,
-      image,
-    });
-    console.log(
-      "TEXT LENGTH",
-      text.length,
-      "EXISTING LENGTH",
-      (existingText ?? "").length
-    );
-    console.log("TEXT === EXISTING:", text === (existingText ?? ""));
+    setIsUpToDate(titleUnchanged && textUnchanged && imageUnchanged);
   }, [
     title,
     text,
@@ -120,9 +99,6 @@ const BlogForm = ({
             userId,
             docId,
           });
-          if (docId) {
-            setIsUpToDate(true); // ✅ after update
-          }
 
           // Reset form fields
           setTitle("");

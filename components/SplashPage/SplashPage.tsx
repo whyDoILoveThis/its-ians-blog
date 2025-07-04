@@ -24,10 +24,10 @@ const SignMeIn = () => {
           setArrowHover(false);
         }}
         href={"/user/user_2iqJuHsepKWDsGxo2o6rczQpvYq"}
-        className="w-fit hover:!no-underline flex justify-center items-center bg-black bg-opacity-20 rounded-xl p-4 mb-4"
+        className="w-fit hover:!no-underline hover:bg-opacity-10 transition-all flex justify-center items-center bg-black bg-opacity-20 rounded-xl p-4 mb-4"
       >
         <p
-          className={`flex items-center gap-1 text-xl text-${textColor}-400 hover:text-${textColor}-700 font-semibold`}
+          className={`flex items-center gap-1 text-xl dark:text-${textColor}-400 text-${textColor}-500 hover:text-${textColor}-700 font-semibold`}
         >
           <span>Ian&#39;s Blogs</span>
           <span className={`transition-all ${arrowHover && "translate-x-1"}`}>
@@ -84,7 +84,7 @@ const SignMeIn = () => {
       </div>
 
       <div className="max-w-3xl mx-auto mt-12 p-8 bg-black bg-opacity-30 rounded-xl text-center shadow-lg">
-        <h1 className="text-2xl font-semibold text-purple-400 mb-4">
+        <h1 className="text-2xl font-semibold text-purple-500 dark:text-purple-400 mb-4">
           About this Site
         </h1>
         <p className="text-sm text-white">

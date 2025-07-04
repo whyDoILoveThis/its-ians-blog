@@ -42,46 +42,30 @@ const BlogForm = ({
   const todaysDate = new Date();
 
   useEffect(() => {
-    setTitle(existingTitle || "");
-    setText(existingText || "");
-    setImageUrl(existingImageUrl || "");
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+    if (existingTitle) {
+      setTitle(existingTitle);
+    }
+    if (existingText) {
+      setText(existingText);
+    }
+    if (existingImageUrl) {
+      setImageUrl(existingImageUrl);
+    }
+  }, [existingTitle, existingText, existingImageUrl]);
 
   useEffect(() => {
-    function stripHtml(html: string) {
-      const tmp = document.createElement("DIV");
-      tmp.innerHTML = html;
-      return tmp.textContent || tmp.innerText || "";
-    }
     const isSameTitle = title.trim() === (existingTitle ?? "").trim();
-    const isSameText =
-      stripHtml(text).trim() === stripHtml(existingText ?? "").trim();
+    const isSameText = text.trim() === (existingText ?? "").trim();
     const isSameImage = imageUrl === (existingImageUrl ?? "");
+
     const hasImage = image !== null;
 
     setIsUpToDate(isSameTitle && isSameText && isSameImage && !hasImage);
-    console.log({
-      title,
-      existingTitle,
-      titleUnchanged: title.trim() === (existingTitle ?? "").trim(),
-      textUnchanged: text.trim() === (existingText ?? "").trim(),
-      imageUrl,
-      existingImageUrl,
-      image,
-    });
-    console.log(
-      "TEXT LENGTH",
-      text.length,
-      "EXISTING LENGTH",
-      (existingText ?? "").length
-    );
-    console.log("TEXT === EXISTING:", text === (existingText ?? ""));
   }, [
     title,
     text,
-    image,
     imageUrl,
+    image,
     existingTitle,
     existingText,
     existingImageUrl,
@@ -120,9 +104,6 @@ const BlogForm = ({
             userId,
             docId,
           });
-          if (docId) {
-            setIsUpToDate(true); // ✅ after update
-          }
 
           // Reset form fields
           setTitle("");

@@ -33,7 +33,8 @@ const BlogForm = ({
   const [text, setText] = useState(existingText || ""); // Initialize with existing text or empty string
   const [image, setImage] = useState<File | null>(null); // State for file upload
   const [imageUrl, setImageUrl] = useState("");
-  const [isUpToDate, setIsUpToDate] = useState(false);
+  const [isUpToDateImg, setIsUpToDateImg] = useState(false);
+  const [isUpToDateNoImg, setIsUpToDateNoImg] = useState(false);
   const newDocId = uuidv4();
   const router = useRouter();
   const [loading, setLoading] = useState(false);
@@ -42,49 +43,42 @@ const BlogForm = ({
   const todaysDate = new Date();
 
   useEffect(() => {
-    setTitle(existingTitle || "");
-    setText(existingText || "");
-    setImageUrl(existingImageUrl || "");
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+    if (existingTitle) {
+      setTitle(existingTitle);
+    }
+    if (existingText) {
+      setText(existingText);
+    }
+    if (existingImageUrl) {
+      setImageUrl(existingImageUrl);
+    }
+  }, [existingTitle, existingText, existingImageUrl]);
 
   useEffect(() => {
-    function stripHtml(html: string) {
-      const tmp = document.createElement("DIV");
-      tmp.innerHTML = html;
-      return tmp.textContent || tmp.innerText || "";
+    if (
+      imageUrl === existingImageUrl &&
+      text === existingText &&
+      title === existingTitle
+    ) {
+      setIsUpToDateImg(true);
+    } else if (text === existingText && title === existingTitle) {
+      setIsUpToDateNoImg(true);
+    } else {
+      setIsUpToDateImg(false);
+      setIsUpToDateNoImg(false);
     }
-    const isSameTitle = title.trim() === (existingTitle ?? "").trim();
-    const isSameText =
-      stripHtml(text).trim() === stripHtml(existingText ?? "").trim();
-    const isSameImage = imageUrl === (existingImageUrl ?? "");
-    const hasImage = image !== null;
 
-    setIsUpToDate(isSameTitle && isSameText && isSameImage && !hasImage);
-    console.log({
-      title,
-      existingTitle,
-      titleUnchanged: title.trim() === (existingTitle ?? "").trim(),
-      textUnchanged: text.trim() === (existingText ?? "").trim(),
-      imageUrl,
-      existingImageUrl,
-      image,
-    });
-    console.log(
-      "TEXT LENGTH",
-      text.length,
-      "EXISTING LENGTH",
-      (existingText ?? "").length
-    );
-    console.log("TEXT === EXISTING:", text === (existingText ?? ""));
+    if (image !== null) {
+      setIsUpToDateImg(false);
+    }
   }, [
-    title,
-    text,
-    image,
-    imageUrl,
     existingTitle,
     existingText,
     existingImageUrl,
+    image,
+    title,
+    text,
+    imageUrl,
   ]);
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -113,16 +107,13 @@ const BlogForm = ({
           const tempImageUrl = await fbUploadImage(image);
 
           // Call function to create blog post with image URL
-          await fbUpdateBlog({
+          fbUpdateBlog({
             title,
             text,
             imageUrl: tempImageUrl,
             userId,
             docId,
           });
-          if (docId) {
-            setIsUpToDate(true); // ✅ after update
-          }
 
           // Reset form fields
           setTitle("");
@@ -136,7 +127,7 @@ const BlogForm = ({
       //create blog with no image
       else if (existingImageUrl) {
         // Call function to create blog post without image URL
-        await fbUpdateBlog({
+        fbUpdateBlog({
           title,
           text,
           imageUrl: existingImageUrl,
@@ -144,7 +135,7 @@ const BlogForm = ({
           docId,
         });
       } else {
-        await fbUpdateBlog({
+        fbUpdateBlog({
           title,
           text,
           userId,
@@ -233,7 +224,15 @@ const BlogForm = ({
         <Button
           color="green"
           type="submit"
-          text={isUpToDate ? "Up to date 👍🏽" : "Save"}
+          text={
+            !isUpToDateImg && !isUpToDateNoImg
+              ? "Save"
+              : !isUpToDateImg && isUpToDateNoImg
+              ? "Save"
+              : isUpToDateImg && !isUpToDateNoImg
+              ? "Save"
+              : "Up to date 👍🏽"
+          }
         />
       </form>
       <article className="mt-4 flex flex-col items-center">

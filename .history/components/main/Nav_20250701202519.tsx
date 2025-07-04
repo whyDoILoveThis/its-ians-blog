@@ -61,7 +61,7 @@ const Nav = () => {
         <ModeToggle />
         {isLoaded && !userId && (
           <span className="btn btn-outline">
-            <SignInButton mode="modal" />
+            <SignInButton />
           </span>
         )}
         <UserButton />

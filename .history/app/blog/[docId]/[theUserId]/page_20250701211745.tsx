@@ -58,12 +58,6 @@ const Page = ({
     d();
   }, [isDelete, theBlog?.docId, userId, router]);
 
-  useEffect(() => {
-    if (theBlog && !theBlog.imageUrl) {
-      setImageLoaded(true);
-    }
-  }, [theBlog]);
-
   if (!theBlog || !fbUser) {
     return <Loader />;
   }

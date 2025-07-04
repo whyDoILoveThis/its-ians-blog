@@ -1,13 +1,13 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import Link from "next/link";
-import { SignInButton, useAuth, UserButton } from "@clerk/nextjs";
+import { useAuth, UserButton } from "@clerk/nextjs";
 import { scrollToTop } from "@/utils";
 import { fbGetUserById } from "@/firebase/fbGetUserById";
 import { ModeToggle } from "../Buttons/ThemeToggle";
 
 const Nav = () => {
-  const { userId, isLoaded } = useAuth();
+  const { userId } = useAuth();
   const [user, setUser] = useState<User | null>(null);
 
   useEffect(() => {
@@ -59,11 +59,6 @@ const Nav = () => {
         )}
 
         <ModeToggle />
-        {isLoaded && !userId && (
-          <span className="btn btn-outline">
-            <SignInButton mode="modal" />
-          </span>
-        )}
         <UserButton />
       </div>
     </nav>
