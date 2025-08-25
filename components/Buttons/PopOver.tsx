@@ -12,7 +12,7 @@ interface Props {
   line6?: string;
   line7?: string;
   isConfirmPop: boolean;
-  value?: boolean;
+  value?: boolean | null | undefined;
   setState?: Function;
 }
 
@@ -40,7 +40,7 @@ const PopOver = ({
           onClick={() => {
             setShow(true);
           }}
-          className={`btn ${btnClassNames && btnClassNames}`}
+          className={`btn ${btnClassNames && btnClassNames} m-2`}
         >
           {btnTxt}
         </button>
@@ -52,11 +52,11 @@ const PopOver = ({
               onClick={() => {
                 setShow(false);
               }}
-              className={`btn btn-close`}
+              className={`btn btn-close !text-red-400`}
             >
               X
             </button>
-            <p className="text-2xl text-center mt-8">{title}</p>
+            <p className="text-2xl text-center mt-8 px-4">{title}</p>
             {lines.map((line, index) => (
               <p key={index} className="text-sm mb-5">
                 {line && line}

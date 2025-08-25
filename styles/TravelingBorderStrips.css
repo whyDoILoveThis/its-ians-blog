@@ -1,0 +1,152 @@
+.border-streak {
+  position: relative;
+  border: 1px solid #444; /* base border */
+  border-radius: 24px;
+  color: white;
+  padding: 1rem;
+  overflow: hidden;
+  transition: border 0.3s ease, border-radius 0.3s ease, background 0.3s ease, color 0.3s ease, padding 0.3s ease;
+}
+
+/* ALWAYS present ::before */
+.border-streak::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 1px; /* match border thickness */
+  background: linear-gradient(90deg, transparent, rgb(155, 29, 251), transparent);
+  background-size: 200% 100%;
+  animation: streak-move 4s linear infinite;
+  
+  opacity: 0; /* start invisible */
+  transition: opacity 0.5s ease, border-radius 0.3s ease, padding 0.3s ease, background 0.3s ease;
+
+  /* carve out inside so it looks like border */
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+}
+
+/* Fade in streak on hover */
+.border-streak:hover::before {
+  opacity: 1;
+}
+
+@keyframes streak-move {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+
+
+
+/* ============ RACETRACK CORE ============ */
+
+/* Register the animatable custom property for smooth, jitter-free rotation */
+@property --rt-angle {
+  syntax: '<angle>';
+  inherits: false;
+  initial-value: 0deg;
+}
+
+.rt-track {
+  /* Your normal element styles */
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem 1.25rem;
+  font: 500 14px/1.2 system-ui, -apple-system, Segoe UI, Roboto, Inter, Arial, sans-serif;
+  color: #e6e6e6;
+  border: 1px solid hsl(0 0% 22% / 1);      /* Normal 1px border at rest */
+  border-radius: var(--rt-radius, 24px);
+  position: relative;
+  isolation: isolate;                        /* Ensures pseudo-element compositing is clean */
+  transition: background .25s ease, border-color .25s ease;
+}
+
+/* The traveling 1px strip lives entirely in ::after */
+.rt-track::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+
+  /* Thickness of the strip (1px default). Change to 2px if desired. */
+  padding: var(--rt-thickness, 1px);
+
+  /* Clockwise-moving conic gradient with a very short colored segment */
+  --rt-angle: 0deg;
+  --rt-color: #a78bfa;            /* Default strip color (soft violet) */
+  --rt-bg: transparent;           /* Rest of ring is invisible */
+  --rt-seg: 70deg;                 /* Angular length of the strip (~small, subtle) */
+  --rt-speed: 3000ms;             /* Rotation speed (lower = faster) */
+
+  background:
+    conic-gradient(
+      from var(--rt-angle),
+      var(--rt-bg) 0,
+      var(--rt-bg) calc(360deg - var(--rt-seg)),
+      var(--rt-color) 0 360deg
+    );
+
+  /* Mask to keep only a 1px ring that follows border-radius perfectly */
+  -webkit-mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+          mask-composite: exclude;
+
+  /* Subtle presence and glow control (off by default) */
+  opacity: 0;
+  filter: drop-shadow(0 0 0 var(--rt-color));
+
+  /* Smooth fade in/out with no snapping */
+  transition:
+    opacity .35s ease,
+    filter .35s ease;
+  pointer-events: none; /* Never blocks clicks */
+    animation: rt-spin var(--rt-speed) linear infinite paused; /* ⬅ always “spinning” but paused */
+
+}
+
+/* Hover state: fade the strip in and start a continuous clockwise loop */
+.rt-track:hover::after {
+  opacity: 1;
+  animation: rt-spin var(--rt-speed) linear infinite;
+    animation-play-state: running; /* ⬅ resume rotation smoothly */
+
+}
+
+/* Optional subtle background / border reaction on hover (modern, non-intrusive) */
+.rt-track:hover {
+  border-color: color-mix(in oklch, white 22%, transparent);
+  background: color-mix(in oklch, #0b0b0c 92%, var(--rt-color) 8%);
+}
+
+/* When hover ends, opacity fades out while the animation keeps running */
+.rt-track:not(:hover)::after {
+  animation-play-state: running; /* ⬅ keep it spinning during fade-out */
+  transition: opacity .35s ease; /* smooth fade-out */
+}
+
+/* Clockwise rotation using the registered custom property */
+@keyframes rt-spin {
+  to { --rt-angle: 360deg; }
+}
+
+/* ============ NEON FLAVOR (optional) ============ */
+/* Add a feathered glow that remains tasteful and subtle */
+.rt-neon::after {
+  /* Soft diffusion; increase for stronger bloom */
+  filter: drop-shadow(0 0 6px color-mix(in oklch, var(--rt-color) 70%, transparent))
+          drop-shadow(0 0 14px color-mix(in oklch, var(--rt-color) 35%, transparent));
+}
+
+/* ============ ACCESSIBILITY ============ */
+@media (prefers-reduced-motion: reduce) {
+  .rt-track:hover::after {
+    animation: none;              /* Respect motion sensitivity */
+    opacity: 1;                   /* Still shows the highlight without motion */
+  }
+}

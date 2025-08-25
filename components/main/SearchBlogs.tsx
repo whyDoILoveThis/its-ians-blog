@@ -52,9 +52,13 @@ const BlogSearch = ({ userId }: Props) => {
       ) : (
         <div className="flex flex-col items-center">
           <div className="m-2 flex flex-col gap-2">
-            {results.map((blog, index) => (
-              <BlogCard blog={blog} key={index} />
-            ))}
+            {results.map((blog, index) => {
+              if (blog.isPrivate) {
+                return;
+              } else {
+                return <BlogCard blog={blog} key={index} />;
+              }
+            })}
           </div>
         </div>
       )}

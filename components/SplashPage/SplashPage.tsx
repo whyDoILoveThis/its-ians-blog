@@ -7,6 +7,8 @@ import Image from "next/image";
 import Link from "next/link";
 import ArrowRight from "../Icons/ArrowRight";
 import ArrowRightLong from "../Icons/ArrowRightLong";
+import meImg from "@/images/hero--img.png";
+import "@/styles/TravelingBorderStrips.css";
 
 const SignMeIn = () => {
   const [showSignIn, setShowSignIn] = useState(true);
@@ -24,16 +26,25 @@ const SignMeIn = () => {
           setArrowHover(false);
         }}
         href={"/user/user_2iqJuHsepKWDsGxo2o6rczQpvYq"}
-        className="w-fit hover:!no-underline hover:bg-opacity-10 transition-all flex justify-center items-center bg-black bg-opacity-20 rounded-xl p-4 mb-4"
+        className="rt-track w-fit hover:!no-underline hover:bg-opacity-10 transition-all flex justify-center items-center bg-black bg-opacity-20 rounded-3xl p-4 mb-4"
       >
-        <p
-          className={`flex items-center gap-1 text-xl dark:text-${textColor}-400 text-${textColor}-500 hover:text-${textColor}-700 font-semibold`}
+        <div
+          className={`flex items-center justify-center gap-1 text-xl dark:text-${textColor}-400 text-${textColor}-500 hover:text-${textColor}-700 font-semibold`}
         >
+          <div className="bg-white dark:bg-opacity-5 bg-opacity-20 w-[115px] h-[115px] flex items-center justify-center rounded-full">
+            <Image
+              className="rounded-xl -translate-y-2 translate-x-1"
+              width={80}
+              height={100}
+              src={meImg}
+              alt="adsfa"
+            />
+          </div>
           <span>Ian&#39;s Blogs</span>
           <span className={`transition-all ${arrowHover && "translate-x-1"}`}>
             {arrowHover ? <ArrowRightLong /> : <ArrowRight />}
           </span>
-        </p>
+        </div>
       </Link>
 
       <div
@@ -59,7 +70,7 @@ const SignMeIn = () => {
               <p className="text-center text-sm mt-4">
                 Already have an account?{" "}
                 <button
-                  className={`text-${textColor} hover:text-[#3b79ab] font-semibold`}
+                  className={`dark:text-${textColor}-400 text-${textColor}-500 hover:text-[#3b79ab] font-semibold`}
                   onClick={() => setShowSignIn(true)}
                 >
                   Sign In
@@ -72,7 +83,7 @@ const SignMeIn = () => {
               <p className="text-center text-sm mt-4">
                 Don&#39;t have an account?{" "}
                 <button
-                  className={`text-${textColor} hover:text-[#3b79ab] font-semibold`}
+                  className={`dark:text-${textColor}-400 text-${textColor}-500 hover:text-[#3b79ab] font-semibold`}
                   onClick={() => setShowSignIn(false)}
                 >
                   Sign Up

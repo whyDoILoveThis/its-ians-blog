@@ -1,6 +1,7 @@
 interface Blog {
     docId: string,
     id: string;
+    isPrivate: boolean;
     title: string;
     text: string;
     imageUrl?: string;
@@ -8,6 +9,7 @@ interface Blog {
     createdAt: string,
     lastUpdated: string,
     comments?: BlogComment[],
+
   }
 
   interface BlogComment {

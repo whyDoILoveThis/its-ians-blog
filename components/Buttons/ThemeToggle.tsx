@@ -7,22 +7,33 @@ import { useTheme } from "next-themes";
 
 export function ModeToggle() {
   const { theme, setTheme } = useTheme();
-  const isDark = theme === "dark" || null;
+  const [mounted, setMounted] = React.useState(false);
+
+  React.useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  if (!mounted) {
+    // ⛔ Don’t render anything until mounted
+    return (
+      <button className="btn btn-ghost btn-round" aria-hidden="true">
+        <IoFlashlight className="text-xl" />
+      </button>
+    );
+  }
+
+  const isDark = theme === "dark";
 
   return (
     <button
       className="btn btn-ghost btn-round"
       onClick={() => setTheme(isDark ? "light" : "dark")}
     >
-      <div>
-        {theme === "dark" ? (
-          <IoFlashlight className="text-xl" />
-        ) : theme === "light" ? (
-          <GiNightSky className="text-2xl" />
-        ) : (
-          !theme && <IoFlashlight className="text-xl" />
-        )}
-      </div>
+      {isDark ? (
+        <IoFlashlight className="text-xl" />
+      ) : (
+        <GiNightSky className="text-2xl" />
+      )}
     </button>
   );
 }

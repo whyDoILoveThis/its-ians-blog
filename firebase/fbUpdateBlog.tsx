@@ -3,6 +3,7 @@ import { db } from "@/lib/firebaseConfig";
 import { doc, updateDoc } from "firebase/firestore";
 
 interface params {
+  isPrivate: boolean;
   title: string;
   text: string;
   imageUrl?: string; // Optional image URL
@@ -11,6 +12,7 @@ interface params {
 }
 
 export async function fbUpdateBlog({
+  isPrivate,
   title,
   text,
   imageUrl,
@@ -20,6 +22,7 @@ export async function fbUpdateBlog({
   try {
     const docRef = doc(db, `blogs-${userId}`, docId);
     await updateDoc(docRef, {
+      isPrivate: isPrivate,
       title: title,
       text: text,
       imageUrl: imageUrl || null, // Set imageUrl if provided, otherwise null

@@ -20,6 +20,7 @@ export const fbGetUsersBlogs = async ({userId} : params): Promise<Blog[]> => {
         id: doc.id,
         title: data.title,
         text: data.text,
+        isPrivate: data.isPrivate || false,
         imageUrl: data.imageUrl || undefined,
         creatorUid: data.creatorUid,
         createdAt: data.createdAt,

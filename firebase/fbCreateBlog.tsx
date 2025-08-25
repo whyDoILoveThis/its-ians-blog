@@ -3,6 +3,7 @@ import { db } from "@/lib/firebaseConfig";
 import { doc, setDoc } from "firebase/firestore";
 
 interface params {
+  isPrivate: boolean;
   title: string;
   text: string;
   imageUrl?: string; // Optional image URL
@@ -12,6 +13,7 @@ interface params {
 }
 
 export async function fbCreateBlog({
+  isPrivate,
   title,
   text,
   imageUrl,
@@ -22,6 +24,7 @@ export async function fbCreateBlog({
   try {
     const docRef = doc(db, `blogs-${userId}`, docId);
     await setDoc(docRef, {
+      isPrivate: isPrivate,
       title: title,
       text: text,
       imageUrl: imageUrl || null, // Set imageUrl if provided, otherwise null
