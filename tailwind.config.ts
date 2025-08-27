@@ -9,7 +9,14 @@ const config: Config = {
   ],
   
   theme: {
-    extend: {},
+    extend: {
+      screens: {
+        'xxs': '320px',   // custom extra tiny breakpoint
+        'xs': '480px',     // custom tiny breakpoint
+        'lger': '1120px',
+        '3xl': '1920px',   // custom huge breakpoint
+      },
+    },
   },
   plugins: [],
 };
