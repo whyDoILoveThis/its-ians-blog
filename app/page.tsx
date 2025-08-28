@@ -67,7 +67,7 @@ export default function Home() {
   return (
     <div className=" text-gray-900 dark:text-gray-100 min-h-screen">
       <SignedIn>
-        {!theUser && userId !== "user_2mzVBJENtgjNrQ8Ck1dFFZrScBK" && (
+        {!theUser && (
           <div className="p-20 text-center flex flex-col items-center">
             <p className="mb-4 dark:text-gray-200">
               Save your info so that you can create blogs, and you can see other
@@ -177,7 +177,7 @@ export default function Home() {
           </section>
         )}
 
-        {userId === "user_2mzVBJENtgjNrQ8Ck1dFFZrScBK" && (
+        {/* {userId === "user_2mzVBJENtgjNrQ8Ck1dFFZrScBK" && (
           <article className="flex flex-col items-center">
             <p className="text-3xl font-semibold mb-4 text-center dark:text-gray-100">
               👋🏽Welcome guest
@@ -195,7 +195,7 @@ export default function Home() {
             </div>
             {showSearch && <SearchUsers />}
             {!showSearch && (
-              <div>
+              <div className="border border-white">
                 <h2 className="text-2xl mb-2 dark:text-gray-100">All Users</h2>
                 <div className="flex flex-col gap-2">
                   {allUsers.map((user: User, index) => (
@@ -205,7 +205,7 @@ export default function Home() {
               </div>
             )}
           </article>
-        )}
+        )} */}
       </SignedIn>
 
       <SignedOut>
