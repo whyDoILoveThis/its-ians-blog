@@ -12,12 +12,11 @@ import "@/styles/TravelingBorderStrips.css";
 /**
  * SignMeIn — Modern makeover
  * - Keeps existing features (SignIn/SignUp, GuestLoginButton, profile link, images, arrows)
- * - Uses consistent Tailwind tokens (no dynamic class hacks)
- * - Improved spacing, hierarchy, and small animations
+ * - Uses consistent Tailwind tokens
+ * - Improved spacing, hierarchy
  */
 
 const SignMeIn: React.FC = () => {
-  const [showSignIn, setShowSignIn] = useState(true);
   const [arrowHover, setArrowHover] = useState(false);
 
   return (
