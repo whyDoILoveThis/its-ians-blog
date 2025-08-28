@@ -1,8 +1,11 @@
 "use client";
 
 import Button from "@/components/Buttons/Button";
+import ItsDropdown from "@/components/Buttons/ItsDropdown";
 import PopOver from "@/components/Buttons/PopOver";
 import UserCardSmall from "@/components/Cards/UserCardSmall";
+import ChevronsUpDown from "@/components/Icons/ChevronsUpDown";
+import ThreeDots from "@/components/Icons/ThreeDots";
 import Loader from "@/components/Loader";
 import LoaderSpinSmall from "@/components/LoaderSpinSmall";
 import BlogComments from "@/components/main/BlogComments";
@@ -129,23 +132,31 @@ const Page = ({
         edit &&
         theBlog.creatorUid === userId &&
         theBlog.creatorUid === theUserId && (
-          <>
-            <PopOver
-              value={edit}
-              setState={setEdit}
-              isConfirmPop={true}
-              btnTxt="Cancel Edit"
-              title="Your Changes Will Not Be Saved!!"
-            />
-            <PopOver
-              value={isDelete}
-              setState={setIsDelete}
-              isConfirmPop={true}
-              btnTxt="Delete"
-              btnClassNames="mt-2 btn-red"
-              title="THIS BLOG WILL BE GONE FOREVER!!!!! 😨😱💀"
-            />
-          </>
+          <ItsDropdown
+            btnText={<ThreeDots />}
+            btnClassNames="btn btn-round text-shadow flex gap-1 items-center"
+          >
+            <li>
+              <PopOver
+                value={edit}
+                setState={setEdit}
+                isConfirmPop={true}
+                btnTxt="Cancel Edit"
+                btnClassNames="btn-orange text-nowrap"
+                title="Your Changes Will Not Be Saved!!"
+              />
+            </li>
+            <li>
+              <PopOver
+                value={isDelete}
+                setState={setIsDelete}
+                isConfirmPop={true}
+                btnTxt="Delete"
+                btnClassNames="btn-red"
+                title="THIS BLOG WILL BE GONE FOREVER!!!!! 😨😱💀"
+              />
+            </li>
+          </ItsDropdown>
         )
       )}
 
@@ -153,7 +164,11 @@ const Page = ({
       {!edit && theBlog.creatorUid === userId && (
         <div className="flex justify-center gap-4 mb-2">
           {loadingPrivate && (
-            <div className="fixed z-[999999] inset-0 bg-black bg-opacity-60 flex justify-center items-center">
+            <div
+              role="status"
+              aria-live="polite"
+              className="fixed z-[999999] inset-0 bg-black bg-opacity-60 flex justify-center items-center"
+            >
               <LoaderSpinSmall />
             </div>
           )}
