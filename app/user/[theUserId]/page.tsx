@@ -25,9 +25,9 @@ const Page = ({ params: { theUserId } }: { params: { theUserId: string } }) => {
     fetchUser();
   }, [theUserId]);
 
-  if (theUserId === "user_2mzVBJENtgjNrQ8Ck1dFFZrScBK") {
-    router.back();
-  }
+  // if (theUserId === GUEST_USER_ID) {
+  //   router.back();
+  // }
   if (!theUser) {
     return <Loader />;
   }

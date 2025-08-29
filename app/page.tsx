@@ -177,7 +177,7 @@ export default function Home() {
           </section>
         )}
 
-        {/* {userId === "user_2mzVBJENtgjNrQ8Ck1dFFZrScBK" && (
+        {/* {userId === GUEST_USER_ID && (
           <article className="flex flex-col items-center">
             <p className="text-3xl font-semibold mb-4 text-center dark:text-gray-100">
               👋🏽Welcome guest

@@ -1,0 +1,1 @@
+const GUEST_USER_ID = "user_2mzVBJENtgjNrQ8Ck1dFFZrScBK";
